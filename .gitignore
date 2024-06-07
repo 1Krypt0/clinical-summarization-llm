@@ -1,0 +1,5 @@
+.env
+data/
+runs/outputs
+runs/*.txt
+scripts/
