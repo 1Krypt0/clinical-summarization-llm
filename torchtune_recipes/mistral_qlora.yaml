@@ -1,0 +1,79 @@
+# Model Arguments
+model:
+  _component_: torchtune.models.mistral.qlora_mistral_7b
+  lora_attn_modules: ["q_proj", "k_proj", "v_proj"]
+  apply_lora_to_mlp: True
+  apply_lora_to_output: False
+  lora_rank: 64
+  lora_alpha: 16
+
+# Tokenizer
+tokenizer:
+  _component_: torchtune.models.mistral.mistral_tokenizer
+  path: /home/trodrigues/tiago/mistral-7b/tokenizer.model
+
+# Dataset
+dataset:
+  _component_: torchtune.datasets.instruct_dataset
+  source: theKrypt0/FineTune-Mistral
+  split: train
+  train_on_input: True
+  template: torchtune.data._instruct_templates.DefaultInstruct
+  max_seq_len: 8192
+seed: 42
+shuffle: True
+
+# Example if one wishes to continue pre-training, otherwise change args
+checkpointer:
+  _component_: torchtune.utils.FullModelHFCheckpointer
+  checkpoint_dir: /home/trodrigues/tiago/mistral-7b
+  checkpoint_files: [hf_model_0001_0.pt, hf_model_0002_0.pt, hf_model_0003_0.pt]
+  adapter_checkpoint: adapter_0.pt
+  recipe_checkpoint: recipe_state.pt
+  output_dir: /home/trodrigues/tiago/mistral-7b
+  model_type: MISTRAL
+resume_from_checkpoint: False
+
+# Optimizer, Scheduler, and Loss
+optimizer:
+  _component_: torch.optim.AdamW
+  lr: 2e-5
+
+lr_scheduler:
+  _component_: torchtune.modules.get_cosine_schedule_with_warmup
+  num_warmup_steps: 100
+
+loss:
+  _component_: torch.nn.CrossEntropyLoss
+
+# Fine-tuning Arguments
+epochs: 2
+batch_size: 1
+max_steps_per_epoch: null
+gradient_accumulation_steps: 4
+compile: False
+
+# Training env
+device: cuda
+
+# Memory management
+enable_activation_checkpointing: True
+
+# Reduced precision
+dtype: bf16
+
+# Logging
+output_dir: /tmp/lora_finetune_output_mistral
+metric_logger:
+  _component_: torchtune.utils.metric_logging.WandBLogger
+  log_dir: ${output_dir}
+  # the W&B project to log to
+  project: finetune-llms-summarization
+log_every_n_steps: null
+
+# Show case the usage of pytorch profiler
+# Set enabled to False as it's only needed for debugging training
+profiler:
+  _component_: torchtune.utils.profiler
+  enabled: False
+  output_dir: /tmp/mistral-finetune/torchtune_perf_tracing.json
