@@ -10,17 +10,19 @@ We evaluate:
 - GPT-4
 - Gemini 1.5 Pro
 
-It is an ongoing project for my Master's Dissertation, for which I am also writing two papers (pending approval). This project was developed by me, Tiago Rodrigues, under the supervision of Professor Carla Teixeira Lopes, from October 2023 to June 2024.
+It the project for my Master's Dissertation, titled "Extraction of Clinical Narratives from Medical Records using Large Language Models", for which I am also writing two papers. One is a Systematic Literature Review on Clinical Information Extraction using LLMs. It has been submitted to the [ACM Transactions on Computing for Helathcare](https://dl.acm.org/journal/health). The other explains our methodology, results and insights and is currently being written.
+
+This project was developed by me, Tiago Rodrigues, under the supervision of Professor Carla Teixeira Lopes, from October 2023 to June 2024.
 
 ## Repo Structure
 
-**runs/** - Contains the code for each evaluation, as well as the results obtained per model
+**runs/** - Contains the code for each evaluation, as well as the results obtained per model.
 
 **torchtune_recipes/** - Contains the recipes used to fine-tune Llama and Mistral to our domain, which was achieved with the help of [torchtune](https://github.com/pytorch/torchtune), as well as an abstract instruct template, as our templates were built-in on the dataset.
 
-**exploration.ipynb** - Simple exploration of the barebones MIMIC-III dataset.
+**exploration.ipynb** - Simple exploration of the barebones MIMIC-III dataset and our filtered data.
 
-**filter_data.ipynb** - Data filtering used to reduce the dataset
+**filter_data.ipynb** - Data filtering used to reduce the dataset.
 
 **format_data.ipynb** - Dataset creation using a standard format for easier processing and model training.
 
