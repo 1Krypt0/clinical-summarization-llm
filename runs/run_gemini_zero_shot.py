@@ -4,7 +4,7 @@ import dotenv
 import google.generativeai as genai
 import pandas as pd
 
-from common import ZERO_SHOT_PROMPT, load_test_data, evaluate_summaries, save_scores
+from common import ZERO_SHOT_PROMPT, load_test_data
 
 data = load_test_data()
 
@@ -47,12 +47,3 @@ results = pd.DataFrame(results, columns=["summary"])
 results.to_json(
     "./outputs/zero-shot-responses-gemini-1.5.jsonl", lines=True, orient="records"
 )
-
-predictions = []
-
-for pred in results["summary"]:
-    predictions.append(pred["text"])
-
-rouge_score, bleu_score = evaluate_summaries(predictions=predictions)
-
-save_scores("./gemini-zero-shot.pkl", rouge_score, bleu_score)

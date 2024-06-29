@@ -84,20 +84,3 @@ You would summarize them as:
 ### SUMMARY END ###
 """
 )
-
-
-def evaluate_summaries(predictions):
-    rouge = evaluate.load("rouge")
-    bleu = evaluate.load("bleu")
-
-    references = load_test_data()["summary"]
-
-    rouge_score = rouge.compute(predictions=predictions, references=references)
-    bleu_score = bleu.compute(predictions=predictions, references=references)
-
-    return rouge_score, bleu_score
-
-
-def save_scores(path: str, rouge_score: dict, bleu_score: dict) -> None:
-    with open(path, "wb") as f:
-        pickle.dump([rouge_score, bleu_score], f)

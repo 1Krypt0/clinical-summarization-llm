@@ -2,7 +2,7 @@ import os
 import dotenv
 import pandas as pd
 from openai import OpenAI
-from common import load_test_data, ZERO_SHOT_PROMPT, evaluate_summaries, save_scores
+from common import load_test_data, ZERO_SHOT_PROMPT
 
 data = load_test_data()
 
@@ -73,16 +73,3 @@ entries = pd.DataFrame(entries)
 # content.to_json(
 #     "../data/zero-shot-responses-gpt3-part-1.jsonl", orient="records", lines=True
 # )
-
-predictions = pd.read_json("./outputs/zero-shot-responses-gpt3.jsonl", lines=True)
-
-predictions["custom_id"] = predictions["custom_id"].apply(
-    lambda x: int(x.split("-")[1])
-)
-predictions = predictions.sort_values("custom_id")
-predictions = predictions["response"]
-predictions = predictions.apply(lambda x: x["body"]["choices"][0]["message"]["content"])
-
-rouge_score, bleu_score = evaluate_summaries(predictions=predictions)
-
-save_scores("./results/gpt3-zero-shot.pkl", rouge_score, bleu_score)

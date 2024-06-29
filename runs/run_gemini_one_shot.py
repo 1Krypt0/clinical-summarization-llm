@@ -9,8 +9,6 @@ from common import (
     load_one_shot_notes,
     load_one_shot_summary,
     load_test_data,
-    evaluate_summaries,
-    save_scores,
 )
 
 data = load_test_data()
@@ -57,12 +55,3 @@ results = pd.DataFrame(results, columns=["summary"])
 results.to_json(
     "./outputs/one-shot-responses-gemini-1.5.jsonl", lines=True, orient="records"
 )
-
-predictions = []
-
-for pred in results["summary"]:
-    predictions.append(pred["text"])
-
-rouge_score, bleu_score = evaluate_summaries(predictions=predictions)
-
-save_scores("./gemini-one-shot.pkl", rouge_score, bleu_score)

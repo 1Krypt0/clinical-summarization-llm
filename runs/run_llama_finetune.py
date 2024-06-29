@@ -7,7 +7,6 @@ from transformers import (
 from datasets import Dataset
 import pandas as pd
 import torch
-from common import evaluate_summaries, save_scores
 
 test_data = Dataset.from_csv("./data/single-discharge-7.6k-test-formatted.csv")
 
@@ -93,7 +92,3 @@ for entry in test_data:
 results = pd.DataFrame(results, columns=["summary"])
 
 results.to_csv("./outputs/llama_finetuned_preds.csv", index=False)
-
-rouge_score, bleu_score = evaluate_summaries(predictions=results["summary"])
-
-save_scores("./results/llama-finetuned.pkl", rouge_score, bleu_score)

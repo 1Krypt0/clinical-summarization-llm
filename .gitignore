@@ -3,3 +3,4 @@ data/
 runs/outputs
 runs/*.txt
 scripts/
+qualitative/
