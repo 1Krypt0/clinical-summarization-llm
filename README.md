@@ -1,4 +1,4 @@
-# Discharge Summary Generation from Prior Clinical Notes
+# Discharge Summary Generation from Clinical Notes
 
 This repo contains the code developed to evaluate a series of Large Language Models on Abstractive Summarization, with the end-goal of generating a discharge summary out of the notes written during a hospital admission.
 
