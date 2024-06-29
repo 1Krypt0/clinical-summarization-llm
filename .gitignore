@@ -1,6 +1,9 @@
 .env
+old/
 data/
 runs/outputs
 runs/*.txt
 scripts/
 qualitative/
+vizualization/
+logbook.md
